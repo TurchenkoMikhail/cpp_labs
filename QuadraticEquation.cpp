@@ -8,7 +8,7 @@ void Scan(double* a, double* b, double* c) {
 
 void SolveLinear(double b, double c) {
   if (b == 0.0 && c == 0.0) // equation 0x = 0
-    cout << "all";
+    cout << "all arguments are solutions";
   else if (b == 0.0 && c != 0.0)
     cout << "no solution";
   else //b!=0
@@ -17,11 +17,13 @@ void SolveLinear(double b, double c) {
 
 void SolveQuadratic(double a, double b, double c) {
   double d = b * b - 4.0 * a * c;
-
-  if (d >= 0.0) {
-    double discr = sqrt(d);
-    cout << (-b + discr) / (2.0 * a) << " " << (-b - discr) / (2.0 * a);
+  double discr;
+  if (d > 0.0) {
+    discr = sqrt(d);
+    cout << (-b - discr) / (2.0 * a) << " " << (-b + discr) / (2.0 * a);
   }
+  else if (d == 0.0)
+    cout << -b / (2.0 * a);
   else
     cout << "no solution";
 }
