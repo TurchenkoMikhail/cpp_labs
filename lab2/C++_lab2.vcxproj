@@ -140,8 +140,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="students.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="QuadraticEquation.cpp" />
+    <ClCompile Include="students.cpp" />
+    <ClCompile Include="teacher.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header.h" />
