@@ -5,11 +5,11 @@ list <mark_t> table;
 
 //an example of working
 int main(void) {
-  Student student1("Thomas", GOOD);
-  Student student2("Harry", AVERAGE);
-  Student student3("Ben", BAD);
+  GoodStudent student1("Thomas");
+  AverageStudent student2("Harry");
+  BadStudent student3("Ben");
 
-  Teacher teacher;
+  Teacher teacher("Mr. Brown");
 
   student1.ReadTask("tasks.txt");
   student1.SolveTask();
@@ -23,8 +23,8 @@ int main(void) {
   student3.SolveTask();
   student3.SendLetter();
 
-  teacher.GetTask("tasks.txt");
-  teacher.GetRightAnswers();
+  teacher.ReadTask("tasks.txt");
+  teacher.SolveTask();
   teacher.CheckLetterFromQueue();
   teacher.PublishTable();
 

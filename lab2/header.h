@@ -18,63 +18,71 @@ typedef struct {
   double ans[2];
 }answer_t;
 
-//type of students
-typedef enum rate_t {
-  GOOD,
-  AVERAGE,
-  BAD,
-}rate_t;
-
 //letter
 typedef struct {
-  task_t* tasks;     //array of tasks
+  task_t* tasks;//array of tasks
   answer_t* ans;
   string name;  //students name
 }letter_t;
-
-extern queue <letter_t> queue_of_letters;
 
 typedef struct {
   string name; //student
   int score;
 }mark_t;
 
-extern list <mark_t> table;
 
-class Student {
-private:
-  string s_name;
-  rate_t s_rate;     //defines is student good, average or bad
-  task_t* s_task;    //array of quadratic equations
-  answer_t* s_answer;//array of answers on equations
-  int s_len;         //amount of equations (== amount of answers)
-
+class Human {
 public:
-  Student(const char* name, rate_t rate);
-  ~Student();
+  string name;
+  task_t* task;    //array of quadratic equations
+  answer_t* answer;//array of answers on equations
+  int len;         //amount of equations (== amount of answers)
+
+  Human(const char* str);
+  ~Human();
   void ReadTask(const char* str);
-  void SolveTask();
+  void SolveTask(); //solves equation right
+};
+
+class Student : public Human{
+public:
+  Student(const char* str);
+  ~Student();
   void SendLetter();
 };
 
-class Teacher {
-private:
-  task_t* t_task;           //array of quadratic equations
-  answer_t* t_rightanswers;//array of answers on equations
-  int t_len;                //amount of equations (== amount of answers)
-
+//solves
+class GoodStudent :public Student {
 public:
-  Teacher(void);
+  GoodStudent(const char* str);
+  ~GoodStudent();
+  //solves equation right
+};
+
+class AverageStudent : public Student {
+public:
+  AverageStudent(const char* str);
+  ~AverageStudent();
+  void SolveTask();
+};
+
+class BadStudent : public Student {
+public:
+  BadStudent(const char* str);
+  ~BadStudent();
+  void SolveTask();
+};
+
+class Teacher : public Human {
+public:
+  Teacher(const char* str);
   ~Teacher();
 
-  void GetTask(const char* str);
-  void GetRightAnswers();
+  //solves equation right
   void CheckLetterFromQueue();
   void PublishTable();
 };
 
-//for good students (and lucky average students)
+//for good, lucky average students and teacher
 answer_t SolveLinear(double b, double c);
 answer_t SolveQuadratic(double a, double b, double c);
-
-void PrintAnswers(answer_t* ans);
