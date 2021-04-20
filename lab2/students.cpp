@@ -6,16 +6,7 @@ Student::Student(const char* str)
   :Human(str)
 {}
 
-Student::~Student() {
-  if (task) {
-    delete[] task;
-    task = NULL;
-  }
-  if (answer) {
-    delete[] answer;
-    answer = NULL;
-  }
-}
+Student::~Student() {}
 
 GoodStudent::GoodStudent(const char* str)
   : Student(str) 
@@ -29,39 +20,11 @@ BadStudent::BadStudent(const char* str)
   : Student(str)
 {}
 
+GoodStudent::~GoodStudent() {}
 
-GoodStudent::~GoodStudent() {
-  if (task) {
-    delete[] task;
-    task = NULL;
-  }
-  if (answer) {
-    delete[] answer;
-    answer = NULL;
-  }
-}
+AverageStudent::~AverageStudent() {}
 
-AverageStudent::~AverageStudent() {
-  if (task) {
-    delete[] task;
-    task = NULL;
-  }
-  if (answer) {
-    delete[] answer;
-    answer = NULL;
-  }
-}
-
-BadStudent::~BadStudent() {
-  if (task) {
-    delete[] task;
-    task = NULL;
-  }
-  if (answer) {
-    delete[] answer;
-    answer = NULL;
-  }
-}
+BadStudent::~BadStudent() {}
 
 void Student::SendLetter() {
   if (!answer)

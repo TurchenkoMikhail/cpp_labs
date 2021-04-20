@@ -7,16 +7,7 @@ Teacher::Teacher(const char* str)
   :Human(str)
 {}
 
-Teacher::~Teacher() {
-  if (task) {
-    delete[] task;
-    task = NULL;
-  }
-  if (answer) {
-    delete[] answer;
-    answer = NULL;
-  }
-}
+Teacher::~Teacher() {}
 
 void Teacher::CheckLetterFromQueue() {
 
