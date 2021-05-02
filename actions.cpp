@@ -1,3 +1,5 @@
+#define isDown(x) (input.buttons[x].is_down)
+#define isPressed(x) (input.buttons[x].is_down && input.buttons[x].changed)
 
 //is button being pressed, was it pressed a moment ago
 typedef struct {

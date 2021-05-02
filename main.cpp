@@ -1,5 +1,4 @@
 #include "windows.h"
-
 typedef unsigned int uint;
 
 typedef struct {
@@ -10,9 +9,9 @@ typedef struct {
 
 bool RUN = true; //global
 Render_t renderState; //global rendering
-#include "rendering.cpp" //must be included after renderState
 #include "actions.cpp"
-#include "game.cpp"
+#include "figure.cpp"
+#include "rendering.cpp" //must be included after renderState
 
 //messages to window
 LRESULT CALLBACK WindowCallBack(_In_ HWND hwnd, _In_ UINT uMsg, _In_ WPARAM wParam, _In_ LPARAM lParam) {
@@ -53,36 +52,39 @@ LRESULT CALLBACK WindowCallBack(_In_ HWND hwnd, _In_ UINT uMsg, _In_ WPARAM wPar
   return result;
 }
 
-int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
+int _stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
 
   //class Window
   WNDCLASS WindowClass = {};
   WindowClass.style = CS_HREDRAW | CS_VREDRAW;
-  WindowClass.lpszClassName = "Window Class"; //name to identify class
+  WindowClass.lpszClassName = "Game Window Class";
   WindowClass.lpfnWndProc = WindowCallBack; //pointer to messages
 
   //register class
   RegisterClass(&WindowClass);
 
   //create window
-  HWND window = CreateWindowA(WindowClass.lpszClassName, "Arkanoid", WS_OVERLAPPEDWINDOW | WS_VISIBLE, CW_USEDEFAULT, CW_USEDEFAULT, 1280, 720, 0, 0, hInstance, 0);
+  HWND window = CreateWindow(WindowClass.lpszClassName, "Arkanoid", WS_OVERLAPPEDWINDOW | WS_VISIBLE, CW_USEDEFAULT, CW_USEDEFAULT, 1280, 720, 0, 0, hInstance, 0);
   HDC hdc = GetDC(window); //get device context
+
+  MyRectangle Ball(0.f, 0.f, 1.f, 1.f, 0xA52A2A, 10.f);
+  MyRectangle Carriage(0.f, -40.f, 12.f, 2.5f, 0xA52A2A, 0.f);
+
+  //for calculating time
+  float dt = 0.166667f, freq;
 
   while (RUN) {
     //input
     MSG message;
-
     Input input;
 
-    float dt = 0.166667f, freq;
     LARGE_INTEGER frame_begin_time, perfFreq;
     QueryPerformanceCounter(&frame_begin_time);
     QueryPerformanceFrequency(&perfFreq);
     freq = (float)perfFreq.QuadPart;
 
-    for (int i = 0; i < BUTTON_COUNT; i++) {
+    for (int i = 0; i < BUTTON_COUNT; i++)
       input.buttons[i].changed = false;
-    }
 
     //getting messages while playing
     while (PeekMessage(&message, window, 0, 0, PM_REMOVE)) {
@@ -95,7 +97,7 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
 
 #define ProcessButton(b,code)\
 case code: {\
-          input.buttons[b].changed = (is_down != input.buttons[b].is_down) ;\
+          input.buttons[b].changed = is_down != input.buttons[b].is_down;\
           input.buttons[b].is_down = is_down;\
           }break;
 
@@ -114,11 +116,23 @@ case code: {\
     }
 
     //simulate (pixels)
-    Simulate(&input, dt);
+    ClearScreen(0x8B00FF);
+
+    if (isDown(BUTTON_RIGHT)) {
+      Carriage.AddToX(dt); //move carriage
+      input.buttons[BUTTON_RIGHT].is_down = false;
+    }
+    if (isDown(BUTTON_LEFT)) {
+      Carriage.AddToX(-dt);
+      input.buttons[BUTTON_LEFT].is_down = false;
+    }
+
+    Ball.DrawRectangle(&renderState);
+    Carriage.DrawRectangle(&renderState);
 
     //render
     StretchDIBits(hdc, 0, 0, renderState.width, renderState.height, 0, 0, renderState.width, renderState.height, renderState.buff,&renderState.buffBitMapInfo, DIB_RGB_COLORS,SRCCOPY);
- 
+
     LARGE_INTEGER frame_end_time;
     QueryPerformanceCounter(&frame_end_time);
     dt = (float)(frame_end_time.QuadPart - frame_begin_time.QuadPart)/freq;
