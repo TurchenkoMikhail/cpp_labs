@@ -1,25 +1,22 @@
 #include "header.h"
+#define _CRT_SECURE_NO_WARNINGS
 
 Human::Human(const char* str) {
   name = string(str);
-  task = NULL;
-  answer = NULL;
+  tasks = NULL;
   len = 0;
 }
 
 Human::~Human() {
-  if (task) {
-    delete[] task;
-    task = NULL;
-  }
-  if (answer) {
-    delete[] answer;
-    answer = NULL;
+  if (tasks) {
+    delete[] tasks;
+    tasks = NULL;
   }
 }
 
 void Human::ReadTask(const char* str) {
-  FILE* filename = fopen(str, "r");
+  FILE* filename = NULL;
+  fopen_s(&filename, str, "r");
   if (!filename)
     return;
 
@@ -27,17 +24,17 @@ void Human::ReadTask(const char* str) {
   char c;
 
   while (!feof(filename)) {
-    fscanf(filename, "%c", &c);
+    fscanf_s(filename, "%c", &c);
     if (c == '\n')
       len++;
   }
   len--;
-  task = new task_t[len];
+  tasks = new Equation[len];
 
   fseek(filename, 0, SEEK_SET);
 
   for (i = 0; i < len; i++)
-    fscanf(filename, "%lf%lf%lf", &task[i].a, &task[i].b, &task[i].c);
+    fscanf_s(filename, "%lf%lf%lf", &tasks[i].a, &tasks[i].b, &tasks[i].c);
 
   fclose(filename);
 }
@@ -45,16 +42,15 @@ void Human::ReadTask(const char* str) {
 //right answers
 void Human::SolveTask() {
 
-  if (!task) //if there are now tasks yet
+  if (!tasks) //if there are now tasks yet
     return;
 
-  answer = new answer_t[len];
   int i;
 
   for (i = 0; i < len; i++) {
-    if (task[i].a == 0.0)
-      answer[i] = SolveLinear(task[i].b, task[i].c);
+    if (tasks[i].a == 0.0)
+      tasks[i].SolveLinear();
     else
-      answer[i] = SolveQuadratic(task[i].a, task[i].b, task[i].c);
+      tasks[i].SolveQuadratic();
   }
 }

@@ -7,35 +7,43 @@
 using namespace std;
 #define INF 123456 //means that all numbers are solutions of equation 0x^2+0x+0=0
 #define NAMESIZE 50
-#pragma warning(disable:4996)
 
-typedef struct {
-  double a, b, c;
-}task_t;
+class Equation {
+public:
+  double a, b, c; //coefs
+  int numOfAns; //amount of answers
+  double ans[2]; //answers
 
-typedef struct {
-  int num; //amount of answers
-  double ans[2];
-}answer_t;
+  Equation();
+  Equation(double a, double b, double c);
 
-//letter
-typedef struct {
-  task_t* tasks;//array of tasks
-  answer_t* ans;
-  string name;  //students name
-}letter_t;
+  //solving correctly
+  void SolveLinear();
+  void SolveQuadratic();
 
-typedef struct {
-  string name; //student
+  //solving badly
+  void SolveBadly(); // one ans - zero
+};
+
+class Letter {
+public:
+  Equation* tasks; //array of tasks and answers in letter
+  string name;
+};
+
+class Mark {
+public:
+  string name;
   int score;
-}mark_t;
 
+  Mark();
+  Mark(const char* str, int count);
+};
 
 class Human {
 public:
   string name;
-  task_t* task;    //array of quadratic equations
-  answer_t* answer;//array of answers on equations
+  Equation *tasks;
   int len;         //amount of equations (== amount of answers)
 
   Human(const char* str);
@@ -44,11 +52,23 @@ public:
   void SolveTask(); //solves equation right
 };
 
+class Teacher : public Human {
+public:
+
+  Teacher(const char* str);
+  ~Teacher();
+
+  //solves equation right
+  void CheckLetterFromQueue(queue <Letter>* queue_of_letters, list <Mark>* table);
+  void PublishTable(list <Mark> *table);
+};
+
+
 class Student : public Human{
 public:
   Student(const char* str);
   ~Student();
-  void SendLetter();
+  void SendLetter(queue <Letter> *queue_of_letters);
 };
 
 //solves
@@ -72,17 +92,3 @@ public:
   ~BadStudent();
   void SolveTask();
 };
-
-class Teacher : public Human {
-public:
-  Teacher(const char* str);
-  ~Teacher();
-
-  //solves equation right
-  void CheckLetterFromQueue();
-  void PublishTable();
-};
-
-//for good, lucky average students and teacher
-answer_t SolveLinear(double b, double c);
-answer_t SolveQuadratic(double a, double b, double c);
