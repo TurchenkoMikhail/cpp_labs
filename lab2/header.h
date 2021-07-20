@@ -6,7 +6,7 @@
 #include <list>   //table of scores
 using namespace std;
 #define INF 123456 //means that all numbers are solutions of equation 0x^2+0x+0=0
-#define NAMESIZE 50
+#define NAMESIZE 30
 
 class Equation {
 public:
@@ -18,11 +18,7 @@ public:
   Equation(double a, double b, double c);
 
   //solving correctly
-  void SolveLinear();
-  void SolveQuadratic();
-
-  //solving badly
-  void SolveBadly(); // one ans - zero
+  void SolveTaskCorrectly();
 };
 
 class Letter {
@@ -46,29 +42,33 @@ public:
   Equation *tasks;
   int len;         //amount of equations (== amount of answers)
 
-  Human(const char* str);
+  Human(string str);
   ~Human();
   void ReadTask(const char* str);
-  void SolveTask(); //solves equation right
 };
 
+//solves equation right
 class Teacher : public Human {
+private:
+  queue <Letter> queue_of_letters;
+  list <Mark> table;
 public:
-
   Teacher(const char* str);
   ~Teacher();
+  
+  void SolveTaskCorrectly();
+  void ReceiveLetter(Letter letter);
 
-  //solves equation right
-  void CheckLetterFromQueue(queue <Letter>* queue_of_letters, list <Mark>* table);
-  void PublishTable(list <Mark> *table);
+  void CheckLetters();
+  void PublishTable();
 };
 
 
 class Student : public Human{
 public:
-  Student(const char* str);
+  Student(string str);
   ~Student();
-  void SendLetter(queue <Letter> *queue_of_letters);
+  void SendLetter(Teacher& teacher);
 };
 
 //solves
@@ -76,6 +76,7 @@ class GoodStudent :public Student {
 public:
   GoodStudent(const char* str);
   ~GoodStudent();
+  void SolveTask();
   //solves equation right
 };
 

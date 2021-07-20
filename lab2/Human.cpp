@@ -1,7 +1,7 @@
 #include "header.h"
 #define _CRT_SECURE_NO_WARNINGS
 
-Human::Human(const char* str) {
+Human::Human(string str) {
   name = string(str);
   tasks = NULL;
   len = 0;
@@ -24,7 +24,7 @@ void Human::ReadTask(const char* str) {
   char c;
 
   while (!feof(filename)) {
-    fscanf_s(filename, "%c", &c);
+    fscanf_s(filename, "%c", &c, 1);
     if (c == '\n')
       len++;
   }
@@ -37,20 +37,4 @@ void Human::ReadTask(const char* str) {
     fscanf_s(filename, "%lf%lf%lf", &tasks[i].a, &tasks[i].b, &tasks[i].c);
 
   fclose(filename);
-}
-
-//right answers
-void Human::SolveTask() {
-
-  if (!tasks) //if there are now tasks yet
-    return;
-
-  int i;
-
-  for (i = 0; i < len; i++) {
-    if (tasks[i].a == 0.0)
-      tasks[i].SolveLinear();
-    else
-      tasks[i].SolveQuadratic();
-  }
 }

@@ -1,14 +1,25 @@
 #include "header.h"
 
-Teacher::Teacher(const char* str)
-  :Human(str)
-{}
+Teacher::Teacher(const char* str): Human(str) {}
 
-Teacher::~Teacher() {}
+Teacher::~Teacher() {
+  while (queue_of_letters.size() != 0)
+    queue_of_letters.pop();
+}
 
-void Teacher::CheckLetterFromQueue(queue <Letter>* queue_of_letters, list <Mark>* table) {
+void Teacher::SolveTaskCorrectly() {
+  if (!tasks) //if there are now tasks yet
+    return;
+  for (int i = 0; i < len; i++)
+    tasks[i].SolveTaskCorrectly();
+}
 
-  int size = queue_of_letters->size();
+void Teacher::ReceiveLetter(Letter letter) {
+  queue_of_letters.push(letter);
+}
+
+void Teacher::CheckLetters() {
+  int size = (int)queue_of_letters.size();
   if (size == 0) //students did not send ans to teacher
     return;
 
@@ -16,9 +27,9 @@ void Teacher::CheckLetterFromQueue(queue <Letter>* queue_of_letters, list <Mark>
   Letter letter;
   Mark mark;
 
-  while (!queue_of_letters->empty()) {
-    letter = queue_of_letters->front(); //get from queue first letter
-    queue_of_letters->pop(); //remove it from queue
+  while (!queue_of_letters.empty()) {
+    letter = queue_of_letters.front(); //get from queue first letter
+    queue_of_letters.pop(); //remove it from queue
 
     mark.name = letter.name;
     mark.score = 0;
@@ -37,19 +48,19 @@ void Teacher::CheckLetterFromQueue(queue <Letter>* queue_of_letters, list <Mark>
           mark.score++;
       }
     }
-    table->push_back(mark);
+    table.push_back(mark);
   }
 
 }
 
-void Teacher::PublishTable(list <Mark>* table) {
+void Teacher::PublishTable() {
 
-  if (table->size() == 0) //table is empty
+  if (table.size() == 0) //table is empty
     return;
 
   list <Mark>::iterator it;
   cout << "Results (max: " << len << "):" <<endl;
-  for (it = table->begin(); it != table->end(); it++) {
+  for (it = table.begin(); it != table.end(); ++it) {
     cout << it->name << " - " << it->score << endl;
   }
 }
