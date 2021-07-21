@@ -1,8 +1,6 @@
 #include "header.h"
 
-Mark::Mark() {
-  score = 0;
-}
+Mark::Mark() { score = 0; }
 
 Mark::Mark(const char* str, int count) {
   name = string(str);

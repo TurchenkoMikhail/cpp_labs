@@ -1,10 +1,11 @@
 #include "header.h"
 
 Teacher::Teacher(const char* str): Human(str) {}
-
 Teacher::~Teacher() {
   while (queue_of_letters.size() != 0)
     queue_of_letters.pop();
+  while (table.size() != 0)
+    table.pop_back();
 }
 
 void Teacher::SolveTaskCorrectly() {
@@ -14,7 +15,7 @@ void Teacher::SolveTaskCorrectly() {
     tasks[i].SolveTaskCorrectly();
 }
 
-void Teacher::ReceiveLetter(Letter letter) {
+void Teacher::ReceiveLetter(Letter& letter) {
   queue_of_letters.push(letter);
 }
 
@@ -23,7 +24,6 @@ void Teacher::CheckLetters() {
   if (size == 0) //students did not send ans to teacher
     return;
 
-  int i;
   Letter letter;
   Mark mark;
 
@@ -34,7 +34,7 @@ void Teacher::CheckLetters() {
     mark.name = letter.name;
     mark.score = 0;
 
-    for (i = 0; i < len; i++) {
+    for (int i = 0; i < len; i++) {
 
       //if (letter.tasks.ans[i].numOfAns == tasks.ans[i].numOfAns) {
       if ( letter.tasks[i].numOfAns == tasks[i].numOfAns) {
@@ -53,14 +53,14 @@ void Teacher::CheckLetters() {
 
 }
 
-void Teacher::PublishTable() {
+void Teacher::PublishTable(){
 
   if (table.size() == 0) //table is empty
     return;
 
   list <Mark>::iterator it;
   cout << "Results (max: " << len << "):" <<endl;
-  for (it = table.begin(); it != table.end(); ++it) {
+  for (it = table.begin(); it != table.end(); ++it)
     cout << it->name << " - " << it->score << endl;
-  }
+  
 }

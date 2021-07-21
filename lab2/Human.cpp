@@ -1,5 +1,4 @@
 #include "header.h"
-#define _CRT_SECURE_NO_WARNINGS
 
 Human::Human(string str) {
   name = string(str);

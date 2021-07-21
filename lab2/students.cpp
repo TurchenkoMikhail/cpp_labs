@@ -11,7 +11,7 @@ GoodStudent::~GoodStudent() {}
 AverageStudent::~AverageStudent() {}
 BadStudent::~BadStudent() {}
 
-void Student::SendLetter(Teacher& teacher) {
+void Student::SendLetter(Teacher& teacher) const{
   if (!tasks)
     return;
 

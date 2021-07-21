@@ -57,7 +57,7 @@ public:
   ~Teacher();
   
   void SolveTaskCorrectly();
-  void ReceiveLetter(Letter letter);
+  void ReceiveLetter(Letter& letter);
 
   void CheckLetters();
   void PublishTable();
@@ -68,7 +68,7 @@ class Student : public Human{
 public:
   Student(string str);
   ~Student();
-  void SendLetter(Teacher& teacher);
+  void SendLetter(Teacher& teacher) const;
 };
 
 //solves
