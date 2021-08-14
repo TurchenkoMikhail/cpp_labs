@@ -7,3 +7,5 @@ One branch is for one lab:
 2nd - Math Exam (using 'Quadratic Equation')
 
 3rd - Arkanoid game
+
+4th - 1st version of GEMS game (SDL and SDL_image libraries), using shared_ptr, pure virtual functions and inheritance
