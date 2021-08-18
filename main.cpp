@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 #include "windows.h"
 typedef unsigned int uint;
 
@@ -138,4 +139,15 @@ case code: {\
     dt = (float)(frame_end_time.QuadPart - frame_begin_time.QuadPart)/freq;
     frame_begin_time = frame_end_time; //for next loop
   }
+=======
+#include "Game.h"
+
+int main(int argc, char** argv) {
+
+	Game game;
+	game.create(520, 450);
+	game.play();
+
+	return 0;
+>>>>>>> Stashed changes
 }
