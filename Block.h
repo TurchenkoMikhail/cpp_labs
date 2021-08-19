@@ -8,7 +8,7 @@
 //typedef SDL_Sprite Block;
 class Block : public SDL_Sprite {
 public:
-  int x,y,kind;
+  int x,y,kind, health;
   virtual void DoAction() = 0;
 };
 
@@ -43,7 +43,7 @@ public:
 //kind = 4
 class HealthyBlock : public Block {
 public:
+  bool* isBlockDamaged;
   HealthyBlock() { health = 3; }
-  int health;
   void DoAction();
 };

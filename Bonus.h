@@ -38,16 +38,20 @@ public:
 
 class Magnet : public Bonus {
 public:
+  bool* isMagnetActivated;
   void IsActivated();
 };
 
 class SecondCarriage : public Bonus {
 public:
+  SDL_Sprite** secondPaddle;
+  bool* secondPaddleWasCreated;
   void IsActivated();
 };
 
 class ChangePathBall : public Bonus {
 public:
+  Ball* ball;
   void IsActivated();
 };
 

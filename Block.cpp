@@ -37,6 +37,9 @@ void ChangeSpeedBlock::DoAction(){
 
 void HealthyBlock::DoAction(){
   health--;
-  if(health==0)
+  if (health == 0) {
     setPosition(-100, 0);
+    return;
+  }
+  (*isBlockDamaged) = true;
 }

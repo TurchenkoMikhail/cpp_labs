@@ -29,15 +29,22 @@ void DecreaseSpeed::IsActivated() {
     ball->dy = (ball->dy > 0) ? ball->dy - 1 : ball->dy + 1;
 }
 
-//TO DO
-void Magnet::IsActivated() {
-  std::cout << "Dropped magnet!";
-}
+
+void Magnet::IsActivated() { (*isMagnetActivated) = true;}
+
 void SecondCarriage::IsActivated() {
-  std::cout << "Dropped second carriage!\n";
+  if (*secondPaddle == nullptr) {
+    *secondPaddle = new SDL_Sprite;
+    *secondPaddleWasCreated = true;
+  }
 }
 void ChangePathBall::IsActivated() {
-  std::cout << "Dropped new path!\n";
+  do {
+    ball->dx = rand() % 11 - 5; //[-5, 5]
+  } while (ball->dx == 0);
+  do {
+    ball->dy = rand() % 11 - 5; //[-5, 5]
+  } while (ball->dy == 0);
 }
 void SecondBall::IsActivated() {
   std::cout << "Dropped second ball!\n";

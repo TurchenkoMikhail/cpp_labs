@@ -41,16 +41,19 @@ void Game::create(int w, int h) {
 	sPaddle.setTexture(managertexture.getTexture("paddle_size1.png"));
 
 	sPaddle.setPosition(300, 440);
+
+	secondPaddle = nullptr;
 	
 	isPaddleResized = false;
 	bonusSize = 0;
 	paddleSize = 1;
+	isMagnetActivated = false;
 
 	for (int i = 1; i <= 10; i++) {
 		for (int j = 1; j <= 10; j++) {
 
 			int kind = rand() % 5;
-			//int kind = 2;
+			//int kind = 4;
 
 			if (kind == 0) {
 				UsualBlock* blockptr = new UsualBlock;
@@ -74,6 +77,7 @@ void Game::create(int w, int h) {
 
 				//put one bonus to block
 				int bonus_kind = rand() % 8;
+				//int bonus_kind = 6;
 
 				if (bonus_kind == 0) {
 					BonusBiggerCarriageSize* bonus = new BonusBiggerCarriageSize;
@@ -111,18 +115,22 @@ void Game::create(int w, int h) {
 				else if (bonus_kind == 4) {
 					Magnet* bonus = new Magnet;
 					std::shared_ptr <Magnet> ptr(bonus);
+					ptr->isMagnetActivated = &isMagnetActivated;
 					ptr->setTexture(managertexture.getTexture("bonus_magnet.png"));
 					bonuses[bonusSize] = ptr;
 				}
 				else if (bonus_kind == 5) {
 					SecondCarriage* bonus = new SecondCarriage;
 					std::shared_ptr <SecondCarriage> ptr(bonus);
+					ptr->secondPaddle = &secondPaddle;
+					ptr->secondPaddleWasCreated = &secondPaddleWasCreated;
 					ptr->setTexture(managertexture.getTexture("bonus_new_carriage.png"));
 					bonuses[bonusSize] = ptr;
 				}
 				else if (bonus_kind == 6) {
 					ChangePathBall* bonus = new ChangePathBall;
 					std::shared_ptr <ChangePathBall> ptr(bonus);
+					ptr->ball = &sBall;
 					ptr->setTexture(managertexture.getTexture("bonus_new_way.png"));
 					bonuses[bonusSize] = ptr;
 				}
@@ -149,8 +157,9 @@ void Game::create(int w, int h) {
 			else if (kind == 4) {
 				HealthyBlock* blockptr = new HealthyBlock;
 				std::shared_ptr <HealthyBlock> ptr(blockptr);
+				ptr->isBlockDamaged = &isBlockDamaged;
 				block[n] = ptr;
-				block[n]->setTexture(managertexture.getTexture("block05.png"));
+				block[n]->setTexture(managertexture.getTexture("block05_life3.png"));
 			}
 
 			block[n]->setPosition(i * 43, j * 20);
@@ -159,8 +168,8 @@ void Game::create(int w, int h) {
 			n++;
 		}
 	}
-	sBall.dx = 5;
-	sBall.dy = 4;
+	sBall.dx = 4;
+	sBall.dy = 3;
 	sBall.x = 300;
 	sBall.y = 300;
 }
@@ -210,7 +219,7 @@ void Game::update() {
 		if (SDL_HasIntersection(&a, &c)) {
 			block[i]->DoAction();
 
-			// check is bonus was dropped
+			// check if bonus was dropped
 			for (int j = 0; j < bonusSize; ++j) {
 				//set falling of bonus
 				if (bonuses[j]->isDropped == true) {
@@ -222,6 +231,22 @@ void Game::update() {
 					break;
 				}
 			}
+
+			//check if healthy block was damaged;
+			if (isBlockDamaged == true) {
+				isBlockDamaged = false;
+				if (block[i]->health == 4)
+					block[i]->setTexture(managertexture.getTexture("block05_life2.png"));
+				else if (block[i]->health == 2)
+					block[i]->setTexture(managertexture.getTexture("block05_life1.png"));
+				block[i]->setPosition(block[i]->x * 43, block[i]->y * 20);
+			}
+
+			if (sBall.dx > 0)
+				sBall.x -= 3;
+			else if (sBall.dx < 0)
+				sBall.x += 3;
+
 			sBall.dx = -sBall.dx;
 		}
 	}
@@ -250,6 +275,21 @@ void Game::update() {
 
 			}
 
+			//check is healthy block was damaged;
+			if (isBlockDamaged == true) {
+				isBlockDamaged = false;
+				if(block[i]->health == 2)
+				  block[i]->setTexture(managertexture.getTexture("block05_life2.png"));
+				else if(block[i]->health == 1)
+					block[i]->setTexture(managertexture.getTexture("block05_life1.png"));
+				block[i]->setPosition(block[i]->x * 43, block[i]->y * 20);
+			}
+
+			if (sBall.dy > 0)
+				sBall.y -= 3;
+			else if (sBall.dy < 0)
+				sBall.y += 3;
+
 			sBall.dy = -sBall.dy;
 		}
 	}
@@ -260,22 +300,63 @@ void Game::update() {
 	if (sBall.y < 0 || sBall.y>450)
 		sBall.dy = -sBall.dy;
 
-	if (managerinput.isKeyDown(SDLK_RIGHT))
+	if (managerinput.isKeyDown(SDLK_RIGHT)) {
 		sPaddle.move(6, 0);
-	if (managerinput.isKeyDown(SDLK_LEFT))
+		if (isMagnetActivated == true && sBall.dy == 0 && sBall.dx == 0)
+			sBall.x += 6;
+	}
+	if (managerinput.isKeyDown(SDLK_LEFT)) {
 		sPaddle.move(-6, 0);
+		if (isMagnetActivated == true && sBall.dy == 0 && sBall.dx == 0)
+			sBall.x += (-6);
+	}
 
-	//intersection ball and bonuses with paddle
+	//intersection ball and bonuses with paddles
 	SDL_Rect a = { sBall.x, sBall.y, 12, 12 };
 	SDL_FRect b = sPaddle.getRect();
 	SDL_Rect c = { b.x,b.y,b.w,b.h };
-	if (SDL_HasIntersection(&a, &c))
-		sBall.dy = -(rand() % 5 + 2);
+	if (SDL_HasIntersection(&a, &c)) {
+		if (isMagnetActivated == true) {
+
+			if (sBall.dx)
+				sBall.dxToRemember = sBall.dx;
+			sBall.dx = 0; //ball will not move without paddle
+			sBall.dy = 0;
+		}
+
+		else {
+			//new speed
+			sBall.dy = -(rand() % 4 + 2);
+		}
+		
+	}
+
+
+	//with secondPaddle
+	if (secondPaddle != nullptr) {
+
+		SDL_FRect b2 = secondPaddle->getRect();
+		SDL_Rect c2 = { b2.x,b2.y,b2.w,b2.h };
+
+		if (SDL_HasIntersection(&a, &c2)) {
+			sBall.dy = -(rand() % 4 + 2);
+			delete secondPaddle; //paddle destroys after using
+			secondPaddle = nullptr;
+		}
+	}
+
+	//release ball from magnet
+	if (managerinput.isKeyDown(SDLK_SPACE) && sBall.dy == 0 && sBall.dx == 0 && isMagnetActivated == true) {
+		sBall.dy = -(rand() % 4 + 2);
+		sBall.dx = sBall.dxToRemember;
+	}
 
 	for (int i = 0; i < bonusSize; ++i) {
 		if (bonuses[i]->isFalling == true) {
 
 			SDL_Rect bonus = { bonuses[i]->x, bonuses[i]->y, 42, 42 };
+
+			//intersection between bonus and first paddle
 			if (SDL_HasIntersection(&bonus, &c)) {
 				bonuses[i]->isFalling = false;
 				bonuses[i]->setPosition(-100, 0);
@@ -302,8 +383,24 @@ void Game::update() {
 					sPaddle.setPosition(paddlePos.x, paddlePos.y);
 				}
 
-
+				//check if second paddle was created
+				if (secondPaddleWasCreated == true) {
+					secondPaddleWasCreated = false;
+					if (paddleSize == 1)
+						secondPaddle->setTexture(managertexture.getTexture("paddle_size1.png"));
+					else if (paddleSize == 2)
+						secondPaddle->setTexture(managertexture.getTexture("paddle_size2.png"));
+					else if (paddleSize == 3)
+						secondPaddle->setTexture(managertexture.getTexture("paddle_size3.png"));
+					else if (paddleSize == 4)
+						secondPaddle->setTexture(managertexture.getTexture("paddle_size4.png"));
+					else if (paddleSize == 5)
+						secondPaddle->setTexture(managertexture.getTexture("paddle_size5.png"));
+					secondPaddle->setPosition(rand() % 340, 440);
+				}
+				
 			}
+
 
 		}
 	}
@@ -332,6 +429,9 @@ void Game::render() {
 	}
 	for (int i = 0; i < n; i++)
 		block[i]->draw(renderer);
+
+	if (secondPaddle != nullptr)
+		secondPaddle->draw(renderer);
 	
 	SDL_RenderPresent(renderer);
 }

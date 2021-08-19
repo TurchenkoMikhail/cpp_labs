@@ -7,6 +7,7 @@
 #include "Block.h"
 #include "Ball.h"
 #include "Bonus.h"
+#include <cmath>
 
 
 class Game {
@@ -42,15 +43,19 @@ private:
 	// данные игры
 
 	std::shared_ptr<Block> block[100];
-	//std::vector <Bonus> bonuses;
 	std::shared_ptr<Bonus> bonuses[100];
 	int bonusSize;
 
 	int FindBonusInVector(int i, int j);
 
 	SDL_Sprite sBackground, sPaddle;
+	SDL_Sprite* secondPaddle;
 	int paddleSize;
+
+	bool secondPaddleWasCreated;
 	bool isPaddleResized;
+	bool isMagnetActivated;
+	bool isBlockDamaged; //for healthy blocks
 
 	Ball sBall;
 
