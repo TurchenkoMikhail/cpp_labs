@@ -2,12 +2,14 @@
 #include <iostream>
 
 void BonusBiggerCarriageSize::IsActivated(){
+  (*score)++;
   if ((*paddleSize) < 5) {
     (*paddleSize)++;
     (*isPaddleResized) = true;
   }
 }
 void BonusSmallerCarriageSize::IsActivated() {
+  (*score)++;
   if ((*paddleSize) > 1) {
     (*paddleSize)--;
     (*isPaddleResized) = true;
@@ -15,37 +17,61 @@ void BonusSmallerCarriageSize::IsActivated() {
 }
 
 void BoostSpeed::IsActivated() {
-  if (abs(ball->dx) < 6) 
-    ball->dx = (ball->dx > 0) ? ball->dx + 1 : ball->dx - 1;
-  
-  if (abs(ball->dy) < 5)
-    ball->dy = (ball->dy > 0) ? ball->dy + 1 : ball->dy - 1;
+  (*score)++;
+
+  if (abs(ball[0]->dx) < 6)
+    ball[0]->dx = (ball[0]->dx > 0) ? (ball[0]->dx + 1) : (ball[0]->dx - 1);
+  if (abs(ball[0]->dy) < 5)
+    ball[0]->dy = (ball[0]->dy > 0) ? (ball[0]->dy + 1) : (ball[0]->dy - 1);
+
+  if (abs(ball[1]->dx) < 6)
+    ball[1]->dx = (ball[1]->dx > 0) ? (ball[1]->dx + 1) : (ball[1]->dx - 1);
+  if (abs(ball[1]->dy) < 5)
+    ball[1]->dy = (ball[1]->dy > 0) ? (ball[1]->dy + 1) : (ball[1]->dy - 1);
 }
 
 void DecreaseSpeed::IsActivated() {
-  if (abs(ball->dx) > 2)
-    ball->dx = (ball->dx > 0) ? ball->dx - 1 : ball->dx + 1;
-  if (abs(ball->dy) > 1)
-    ball->dy = (ball->dy > 0) ? ball->dy - 1 : ball->dy + 1;
+
+  (*score)++;
+
+  if (abs(ball[0]->dx) > 3)
+    ball[0]->dx = (ball[0]->dx > 0) ? ball[0]->dx - 1 : ball[0]->dx + 1;
+  if (abs(ball[0]->dy) > 3)
+    ball[0]->dy = (ball[0]->dy > 0) ? ball[0]->dy - 1 : ball[0]->dy + 1;
+
+  if (abs(ball[1]->dx) > 3)
+    ball[1]->dx = (ball[1]->dx > 0) ? ball[1]->dx - 1 : ball[1]->dx + 1;
+  if (abs(ball[1]->dy) > 3)
+    ball[1]->dy = (ball[1]->dy > 0) ? ball[1]->dy - 1 : ball[1]->dy + 1;
 }
 
 
-void Magnet::IsActivated() { (*isMagnetActivated) = true;}
+void Magnet::IsActivated() { (*isMagnetActivated) = true; (*score)++;}
 
 void SecondCarriage::IsActivated() {
-  if (*secondPaddle == nullptr) {
-    *secondPaddle = new SDL_Sprite;
+  (*score)++;
+  if (*secondPaddleIsActive == false)
     *secondPaddleWasCreated = true;
-  }
 }
 void ChangePathBall::IsActivated() {
+  (*score)++;
   do {
-    ball->dx = rand() % 11 - 5; //[-5, 5]
-  } while (ball->dx == 0);
+    ball[0]->dx = rand() % 9 - 4; //[-4, 4]
+  } while (ball[0]->dx == 0);
   do {
-    ball->dy = rand() % 11 - 5; //[-5, 5]
-  } while (ball->dy == 0);
+    ball[0]->dy = rand() % 9 - 4; //[-4, 4]
+  } while (ball[0]->dy == 0);
+
+
+  do {
+    ball[1]->dx = rand() % 9 - 4; //[-4, 4]
+  } while (ball[1]->dx == 0);
+  do {
+    ball[1]->dy = rand() % 9 - 4; //[-4, 4]
+  } while (ball[1]->dy == 0);
 }
 void SecondBall::IsActivated() {
-  std::cout << "Dropped second ball!\n";
+  (*score)++;
+  (*ball)[0].isActive = true;
+  (*ball)[1].isActive = true;
 }

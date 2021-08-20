@@ -4,6 +4,7 @@
 
 class Bonus : public SDL_Sprite{
 public:
+  int* score;
   Bonus() { isFalling = false; isDropped = false; dy = 2; }
   virtual void IsActivated() = 0;
   bool isFalling, isDropped;
@@ -26,13 +27,13 @@ public:
 
 class BoostSpeed : public Bonus {
 public:
-  Ball* ball;
+  Ball (*ball)[2];
   void IsActivated();
 };
 
 class DecreaseSpeed : public Bonus {
 public:
-  Ball* ball;
+  Ball(*ball)[2];
   void IsActivated();
 };
 
@@ -44,18 +45,18 @@ public:
 
 class SecondCarriage : public Bonus {
 public:
-  SDL_Sprite** secondPaddle;
-  bool* secondPaddleWasCreated;
+  bool* secondPaddleWasCreated, *secondPaddleIsActive;
   void IsActivated();
 };
 
 class ChangePathBall : public Bonus {
 public:
-  Ball* ball;
+  Ball(*ball)[2];
   void IsActivated();
 };
 
 class SecondBall : public Bonus {
 public:
+  Ball(*ball)[2];
   void IsActivated();
 };

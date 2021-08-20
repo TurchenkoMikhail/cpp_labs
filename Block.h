@@ -8,6 +8,7 @@
 //typedef SDL_Sprite Block;
 class Block : public SDL_Sprite {
 public:
+  int* score;
   int x,y,kind, health;
   virtual void DoAction() = 0;
 };
@@ -36,7 +37,7 @@ public:
 //kind = 3
 class ChangeSpeedBlock : public Block {
 public:
-  Ball* ball;
+  Ball (*ball)[2];
   void DoAction();
 };
 

@@ -1,4 +1,5 @@
 #pragma once
+//#include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
 #include "ManagerTexture.h"
@@ -40,16 +41,19 @@ private:
 
 	void InitSDL();
 
-	// данные игры
+	int score;
 
 	std::shared_ptr<Block> block[100];
 	std::shared_ptr<Bonus> bonuses[100];
 	int bonusSize;
 
 	int FindBonusInVector(int i, int j);
+	bool CheckWin();
 
-	SDL_Sprite sBackground, sPaddle;
-	SDL_Sprite* secondPaddle;
+	SDL_Sprite sBackground, sPaddle, secondPaddle;
+	bool secondPaddleIsActive;
+	//SDL_Sprite* secondPaddle;
+	
 	int paddleSize;
 
 	bool secondPaddleWasCreated;
@@ -57,7 +61,7 @@ private:
 	bool isMagnetActivated;
 	bool isBlockDamaged; //for healthy blocks
 
-	Ball sBall;
+	Ball sBall[2];
 
 	//numbers of blocks
 	int n = 0;
