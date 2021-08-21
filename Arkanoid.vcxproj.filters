@@ -32,42 +32,10 @@
     </ClCompile>
     <ClCompile Include="Block.cpp">
       <Filter>Исходные файлы</Filter>
-<<<<<<< Updated upstream:Arkanoid.vcxproj.filters
-=======
-    </ClCompile>
-    <ClCompile Include="Bonus.cpp">
-      <Filter>Исходные файлы</Filter>
->>>>>>> Stashed changes:gems.vcxproj.filters
-    </ClCompile>
-    <ClCompile Include="Ball.cpp">
-      <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Bonus.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Game.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="ManagerInput.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="ManagerTexture.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="SDL_Sprite.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Block.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Ball.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Bonus.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">

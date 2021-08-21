@@ -10,7 +10,7 @@ void ManagerInput::Dispose(void) {
 
 ManagerInput::~ManagerInput() { Dispose(); }
 
-void ManagerInput::update(SDL_Event event) {
+void ManagerInput::Update(SDL_Event event) {
 
 	for (auto& it : _keyMap) {
 		_previousKeyMap[it.first] = it.second;

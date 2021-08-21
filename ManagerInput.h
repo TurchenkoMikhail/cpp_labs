@@ -11,21 +11,13 @@ public:
 	int wheel_x;
 	int wheel_y;
 
-	void update(SDL_Event event);
+	void Update(SDL_Event event);
 
 	void wheelEvet(int x, int y) {
 		wheel_x = x;
 		wheel_y = y;
 	}
 
-<<<<<<< Updated upstream
-=======
-	void wheelEvet(int x, int y) {
-		wheel_x = x;
-		wheel_y = y;
-	}
-
->>>>>>> Stashed changes
 
 	void Dispose();
 	void pressKey(unsigned int keyID);

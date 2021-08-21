@@ -1,5 +1,4 @@
 #pragma once
-//#include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
 #include "ManagerTexture.h"
@@ -18,32 +17,23 @@ public:
 
 
 
-<<<<<<< Updated upstream
-	void create(int, int);
-	void play();
-=======
 	void Create(int, int);
 	void Play();
->>>>>>> Stashed changes
 
 private:
 
-	void update();
-	void render();
+	void Update();
+	void Render();
 
 
 	bool GameLoop;
 
 	int GS_width;
-<<<<<<< Updated upstream
-	int GS_height;  // размеры окна
-=======
 	int GS_height; 
->>>>>>> Stashed changes
 
-	SDL_Window			*window;   // ссылка на окно
-	SDL_Renderer		*renderer; // ссылка на рендер
-	SDL_Event			 event;     // события нажатия клавиш
+	SDL_Window *window;
+	SDL_Renderer *renderer;
+	SDL_Event	event;
 
 	ManagerTexture managertexture;
 	ManagerInput managerinput;
@@ -61,10 +51,6 @@ private:
 
 	SDL_Sprite sBackground, sPaddle, secondPaddle;
 	bool secondPaddleIsActive;
-<<<<<<< Updated upstream
-	//SDL_Sprite* secondPaddle;
-=======
->>>>>>> Stashed changes
 	
 	int paddleSize;
 

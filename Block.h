@@ -3,13 +3,7 @@
 #include <iostream>
 #include "Ball.h"
 #include "Bonus.h"
-<<<<<<< Updated upstream
-#include <vector>
 
-//typedef SDL_Sprite Block;
-=======
-
->>>>>>> Stashed changes
 class Block : public SDL_Sprite {
 public:
   int* score;
@@ -32,10 +26,6 @@ public:
 //kind = 2
 class BonusBlock : public Block {
 public:
-<<<<<<< Updated upstream
-  //std::vector <Bonus>* arr;
-=======
->>>>>>> Stashed changes
   std::shared_ptr <Bonus> (*arr)[100];
   int* bonusSize;
   void DoAction();

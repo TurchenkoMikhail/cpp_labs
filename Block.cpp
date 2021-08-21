@@ -6,11 +6,7 @@ void UsualBlock::DoAction(){
   setPosition(-100, 0);
 }
 
-<<<<<<< Updated upstream
-//does nothing
-=======
 //does not delete itself
->>>>>>> Stashed changes
 void NonDestroyableBlock::DoAction() { (*score)++; }
 
 //drops some bonus
@@ -33,24 +29,6 @@ void ChangeSpeedBlock::DoAction(){
 
   (*score)++;
 
-<<<<<<< Updated upstream
-  if (rand() % 2) {
-    ball[0]->dx++;
-    ball[0]->dy++;
-    ball[1]->dx++;
-    ball[1]->dy++;
-  }
-  else {
-    if(ball[0]->dx > 2)
-      ball[0]->dx--;
-    if (ball[0]->dy > 2)
-      ball[0]->dy--;
-    if (ball[1]->dx > 2)
-      ball[1]->dx--;
-    if (ball[1]->dy > 2)
-      ball[1]->dy--;
-  }
-=======
   if (rand() % 2) { //adding speed
 
     //if ball is moving left
@@ -103,7 +81,6 @@ void ChangeSpeedBlock::DoAction(){
       ball[1]->dx--;
   }
 
->>>>>>> Stashed changes
   setPosition(-100, 0);
 }
 
