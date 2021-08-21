@@ -18,6 +18,14 @@ public:
 		wheel_y = y;
 	}
 
+<<<<<<< Updated upstream
+=======
+	void wheelEvet(int x, int y) {
+		wheel_x = x;
+		wheel_y = y;
+	}
+
+>>>>>>> Stashed changes
 
 	void Dispose();
 	void pressKey(unsigned int keyID);

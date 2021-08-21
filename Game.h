@@ -18,8 +18,13 @@ public:
 
 
 
+<<<<<<< Updated upstream
 	void create(int, int);
 	void play();
+=======
+	void Create(int, int);
+	void Play();
+>>>>>>> Stashed changes
 
 private:
 
@@ -30,7 +35,11 @@ private:
 	bool GameLoop;
 
 	int GS_width;
+<<<<<<< Updated upstream
 	int GS_height;  // размеры окна
+=======
+	int GS_height; 
+>>>>>>> Stashed changes
 
 	SDL_Window			*window;   // ссылка на окно
 	SDL_Renderer		*renderer; // ссылка на рендер
@@ -52,7 +61,10 @@ private:
 
 	SDL_Sprite sBackground, sPaddle, secondPaddle;
 	bool secondPaddleIsActive;
+<<<<<<< Updated upstream
 	//SDL_Sprite* secondPaddle;
+=======
+>>>>>>> Stashed changes
 	
 	int paddleSize;
 

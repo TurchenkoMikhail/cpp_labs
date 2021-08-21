@@ -34,6 +34,7 @@ void DecreaseSpeed::IsActivated() {
 
   (*score)++;
 
+<<<<<<< Updated upstream
   if (abs(ball[0]->dx) > 3)
     ball[0]->dx = (ball[0]->dx > 0) ? ball[0]->dx - 1 : ball[0]->dx + 1;
   if (abs(ball[0]->dy) > 3)
@@ -42,6 +43,16 @@ void DecreaseSpeed::IsActivated() {
   if (abs(ball[1]->dx) > 3)
     ball[1]->dx = (ball[1]->dx > 0) ? ball[1]->dx - 1 : ball[1]->dx + 1;
   if (abs(ball[1]->dy) > 3)
+=======
+  if (abs(ball[0]->dx) > 2)
+    ball[0]->dx = (ball[0]->dx > 0) ? ball[0]->dx - 1 : ball[0]->dx + 1;
+  if (abs(ball[0]->dy) > 2)
+    ball[0]->dy = (ball[0]->dy > 0) ? ball[0]->dy - 1 : ball[0]->dy + 1;
+
+  if (abs(ball[1]->dx) > 2)
+    ball[1]->dx = (ball[1]->dx > 0) ? ball[1]->dx - 1 : ball[1]->dx + 1;
+  if (abs(ball[1]->dy) > 2)
+>>>>>>> Stashed changes
     ball[1]->dy = (ball[1]->dy > 0) ? ball[1]->dy - 1 : ball[1]->dy + 1;
 }
 

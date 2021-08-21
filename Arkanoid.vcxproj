@@ -151,7 +151,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+<<<<<<< Updated upstream:Arkanoid.vcxproj
     <ClCompile Include="Ball.cpp" />
+=======
+>>>>>>> Stashed changes:gems.vcxproj
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Bonus.cpp" />
     <ClCompile Include="Game.cpp" />
