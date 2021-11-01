@@ -7,7 +7,13 @@ bool Gem::Destroy(std::vector<gemsToDoAction>& arr) {
 		DecreaseAlpha();
 		return true;
 	}
-	else
+	else {
+		gemsToDoAction temp;
+		temp.type = GetKind(); //puts self coordinates
+		temp.first = GetRow();
+		temp.second = GetCol();
+		arr.push_back(temp);
 		return false;
+	}
 
 }
