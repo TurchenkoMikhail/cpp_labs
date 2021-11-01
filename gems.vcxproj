@@ -19,20 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< Updated upstream:gems.vcxproj
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="ManagerInput.h" />
-    <ClInclude Include="ManagerTexture.h" />
-    <ClInclude Include="Piece.h" />
-    <ClInclude Include="SDL_Sprite.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="ManagerInput.cpp" />
-    <ClCompile Include="ManagerTexture.cpp" />
-    <ClCompile Include="Piece.cpp" />
-=======
     <ClInclude Include="Bonus.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gem.h" />
@@ -51,7 +37,6 @@
     <ClCompile Include="ManagerTexture.cpp" />
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="Score.cpp" />
->>>>>>> Stashed changes:arkanoid.vcxproj
     <ClCompile Include="SDL_Sprite.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

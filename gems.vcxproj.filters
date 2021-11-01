@@ -27,9 +27,6 @@
     <ClInclude Include="SDL_Sprite.h">
       <Filter>Исходные файлы\Файлы заголовков</Filter>
     </ClInclude>
-<<<<<<< Updated upstream:gems.vcxproj.filters
-    <ClInclude Include="Piece.h">
-=======
     <ClInclude Include="Cell.h">
       <Filter>Исходные файлы\Файлы заголовков</Filter>
     </ClInclude>
@@ -40,7 +37,6 @@
       <Filter>Исходные файлы\Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Score.h">
->>>>>>> Stashed changes:arkanoid.vcxproj.filters
       <Filter>Исходные файлы\Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
@@ -60,11 +56,6 @@
     <ClCompile Include="SDL_Sprite.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-<<<<<<< Updated upstream:gems.vcxproj.filters
-    <ClCompile Include="Piece.cpp">
-      <Filter>Исходные файлы\Файлы заголовков</Filter>
-    </ClCompile>
-=======
     <ClCompile Include="Cell.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -77,6 +68,5 @@
     <ClCompile Include="Score.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
->>>>>>> Stashed changes:arkanoid.vcxproj.filters
   </ItemGroup>
 </Project>
