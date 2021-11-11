@@ -150,11 +150,12 @@ void Game::Update() {
 
 
 		} //if gems are neighbours
+
 		else
 			click = 1;
 	}
 
-	//поиск
+	//find matches
 	for (int i = 1; i <= 8; i++) {
 		for (int j = 1; j <= 8; j++){
 
@@ -215,8 +216,23 @@ void Game::Update() {
 				score.AppendScore(grid[arrOfGems[i].first][arrOfGems[i].second]->GetMatch());
 			}
 
-			else if (arrOfGems[i].type == RECOLOR)  //recolor - recolor gems
-				grid[arrOfGems[i].first][arrOfGems[i].second]->SetKind(arrOfGems[i].kindToRemember);
+			else if (arrOfGems[i].type == RECOLOR) {  //recolor - recolor gems
+				//if recolor bonus to usual gem
+				if (grid[arrOfGems[i].first][arrOfGems[i].second]->GetKind() == BOMB || grid[arrOfGems[i].first][arrOfGems[i].second]->GetKind() == RECOLOR) {
+					Gem* gptr = new Gem;
+					std::shared_ptr <Cell> ptr(gptr);
+					int x, y, row, col;
+					cellType_t type = grid[arrOfGems[i].first][arrOfGems[i].second]->GetKind();
+					x = grid[arrOfGems[i].first][arrOfGems[i].second]->GetX();
+					y = grid[arrOfGems[i].first][arrOfGems[i].second]->GetY();
+					row = grid[arrOfGems[i].first][arrOfGems[i].second]->GetRow();
+					col = grid[arrOfGems[i].first][arrOfGems[i].second]->GetCol();
+					grid[arrOfGems[i].first][arrOfGems[i].second] = ptr;
+					grid[arrOfGems[i].first][arrOfGems[i].second]->Initialize(type,x,y,col,row, 0, 255);
+				}
+				else //recolor gem to gem
+					grid[arrOfGems[i].first][arrOfGems[i].second]->SetKind(arrOfGems[i].kindToRemember);
+			}
 
 			else //usual gem - delete itself
 				grid[arrOfGems[i].first][arrOfGems[i].second]->IncreaseMatch();
@@ -256,7 +272,7 @@ void Game::Update() {
 				recolorWasDropped = true;
 
 				//25% chance to drop bomb
-				if (!bombWasDropped && Chance(25)) {
+				if(!bombWasDropped && Chance(25)) {
 
 					std::pair<int, int> p;
 					FindGemToMakeBonus(grid[i][j], p);
@@ -283,7 +299,7 @@ void Game::Update() {
 	//swapping gems if no match
 	if (isSwap && !isMoving) {
 		if (!result) 
-			Swap(grid[y0][x0], grid[y][x]);
+			Swap(grid[y0][x0], grid[y][x]); //swap back if no match
 
 		isSwap = false;
 	}

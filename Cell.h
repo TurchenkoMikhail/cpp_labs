@@ -38,18 +38,18 @@ public:
 	virtual bool Destroy(std::vector<gemsToDoAction>& arrOfGems) = 0; //destroy itself and activate bonus
 	Cell();
 	~Cell();
-	int GetX();
+	int GetX() const;
 	void DecreaseX(int dx);
-	int GetY();
+	int GetY() const;
 	void DecreaseY(int dy);
 	void SetCol(int _col);
-	int GetCol();
+	int GetCol() const;
 	void SetRow(int _row);
-	int GetRow();
+	int GetRow() const;
 	void SetKind(int _kind);
-	cellType_t GetKind();
-	int GetMatch();
+	cellType_t GetKind() const;
+	int GetMatch() const;
 	void IncreaseMatch();
-	int GetAlpha();
+	int GetAlpha() const;
 	void DecreaseAlpha();
 };
