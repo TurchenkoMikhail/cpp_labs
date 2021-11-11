@@ -1,7 +1,8 @@
 #include "Bonus.h"
 #include <iostream>
 
-void BonusBiggerCarriageSize::IsActivated(){
+void BonusBiggerCarriageSize::IsActivated() {
+
   (*score)++;
   if ((*paddleSize) < 5) {
     (*paddleSize)++;
@@ -53,6 +54,31 @@ void SecondCarriage::IsActivated() {
   if (*secondPaddleIsActive == false)
     *secondPaddleWasCreated = true;
 }
+void ChangePathBall::IsActivated() {
+  (*score)++;
+  do {
+    ball[0]->dx = rand() % 9 - 4; //[-4, 4]
+  } while (ball[0]->dx == 0);
+  do {
+    ball[0]->dy = rand() % 9 - 4; //[-4, 4]
+  } while (ball[0]->dy == 0);
+
+
+  do {
+    ball[1]->dx = rand() % 9 - 4; //[-4, 4]
+  } while (ball[1]->dx == 0);
+  do {
+    ball[1]->dy = rand() % 9 - 4; //[-4, 4]
+  } while (ball[1]->dy == 0);
+}
+void SecondBall::IsActivated() {
+  (*score)++;
+  (*ball)[0].isActive = true;
+  (*ball)[1].isActive = true;
+}
+
+}
+
 void ChangePathBall::IsActivated() {
   (*score)++;
   do {

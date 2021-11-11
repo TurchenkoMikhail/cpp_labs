@@ -218,7 +218,7 @@ void Game::InitSDL() {
 void Game::Play() {
 
 	while (GameLoop) {
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0); // цвет обнуления экрана черный
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0); //black screen
 		SDL_RenderClear(renderer);
 		Update();
 	  Render();
